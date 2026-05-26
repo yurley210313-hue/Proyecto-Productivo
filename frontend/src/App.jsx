@@ -13,7 +13,7 @@ import Odontologos from "./pages/admin/Odontologos";
 import Mensajes from "./pages/admin/Mensajes";
 import Dashboard from "./pages/admin/Dashboard";
 
-
+import MisCitas from "./pages/MisCitas";
 import Servicios from "./pages/Servicios";
 import Login from "./pages/Login";
 import ReservarCita from "./pages/ReservarCita";
@@ -47,6 +47,7 @@ minHeight: "100vh"
 <Route path="/contacto" element={<Contacto/>}/>
 <Route path="/reservar" element={<ReservarCita/>}/>
 <Route path="/login" element={<Login/>}/>
+<Route path="/mis-citas" element={<MisCitas />} />
 
 {/* 🔐 ADMIN */}
 <Route path="/admin/dashboard" element={ <ProtectedRoute> <Layout><Dashboard/></Layout> </ProtectedRoute>}/>

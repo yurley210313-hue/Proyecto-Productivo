@@ -1,29 +1,45 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import { Container, Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
+import {  Container, Grid, Card, CardContent, Typography, Box, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function Servicios(){
 
 const [servicios,setServicios] = useState([]);
-
 useEffect(()=>{
 cargar();
 },[]);
+
+// estado
+const [servicioSeleccionado, setServicioSeleccionado] = useState("");
 
 const cargar = async ()=>{
 const res = await api.get("/servicios");
 setServicios(res.data.filter(s => s.activo));
 };
 
+//funciones 
+const irAServicio = (id) => {
+  setServicioSeleccionado(id);
+
+  const elemento = document.getElementById(`servicio-${id}`);
+
+  if (elemento) {
+    elemento.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+};
+
 return(
 
-<Container sx={{mt:5}}>
+<Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
 
 <Typography 
   variant="h4"
   sx={{
-    color: "#11c948",
+    color: "#056f72",
     fontFamily: "Poppins, sans-serif",
     fontWeight: 700,
     textAlign: "center",
@@ -36,122 +52,177 @@ return(
 <div style={{
   width: "80px",
   height: "4px",
-  background: "#124321",
+  background: "#0c1112",
   margin: "0 auto 20px auto",
   borderRadius: "2px"
 }} />
 
 
-<Typography sx={{color: "#a44343", mb:3}}>
-"Los precios mostrados son referenciales. El costo final será determinado luego de la evaluación profesional."
+<Typography
+  sx={{
+    color: "#7a8a90",
+    textAlign: "center",
+    mb: 5,
+    maxWidth: "700px",
+    mx: "auto"
+  }}
+>
+  Los precios mostrados son referenciales. El costo final será determinado luego de la evaluación profesional.
 </Typography>
 
-<Grid container spacing={3}>
-
-{servicios.map(s=>(
-<Grid item xs={12} md={4} key={s._id}>
-
-  <Card
+<Box
   sx={{
     display: "flex",
-    borderRadius: "12px",
-    overflow: "hidden",
-    boxShadow: 3,
-    transition: "0.3s",
-    "&:hover": {
-      transform: "translateY(-5px)",
-      boxShadow: 6
-    }
+    justifyContent: "center",
+    mb: 5
   }}
 >
+  <FormControl sx={{ minWidth: 320 }}>
+    <InputLabel>Tratamientos</InputLabel>
 
-  {/* 🖼️ IMAGEN IZQUIERDA */}
-  {s.imagen && (
-    <img
-      src={s.imagen}
-      alt={s.nombre}
-      style={{
-        width: "250px",
-        height: "100%",
-        objectFit: "cover"
-      }}
-    />
-  )}
-
-  {/* 📄 CONTENIDO DERECHA */}
-  <CardContent sx={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-
-    {/* 🦷 NOMBRE */}
-    <Typography variant="h5" sx={{ color: "#1d0587",fontWeight: 800 }}>
-      {s.nombre}
-    </Typography>
-
-    {/* 💰 PRECIO */}
-    <Typography sx={{ color: "#2e7d32", fontWeight: 500, mb: 1 }}>
-      Desde {new Intl.NumberFormat("es-CO", {
-        style: "currency",
-        currency: "COP",
-        minimumFractionDigits: 0
-      }).format(s.precioReferencial)}
-    </Typography>
-
-    {/* 📝 DESCRIPCIÓN */}
-    <Typography
+    <Select
+      value={servicioSeleccionado}
+      label="Tratamientos"
+      onChange={(e) => irAServicio(e.target.value)}
       sx={{
-        fontSize: "14px",
-        color: "#090101",
-        mb: 2
+        borderRadius: "14px",
+        backgroundColor: "#fff"
       }}
     >
-      {s.descripcion}
-    </Typography>
+      {servicios.map((s) => (
+        <MenuItem key={s._id} value={s._id}>
+          {s.nombre}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
 
-    {/* ⏱ DURACIÓN */}
-    <Typography
-      sx={{
-        fontSize: "13px",
-        color: "#888"
-      }}
-    >
-      ⏱ {s.duracion} minutos
-    </Typography>
-<Button
-  variant="contained"
-  size="small"
-  component={Link}
-  to="/reservar"
-  state={{ servicio: s }}
-  sx={{
-    mt: 2,
-    alignSelf: "flex-start",
-    backgroundColor: "#11c948",
-    "&:hover": {
-      backgroundColor: "#0da83a"
-    }
-  }}
->
-  Solicitar Cita
+<Grid container spacing={4}>
+  {servicios.map((s) => (
+  <Grid item xs={12} md={6} key={s._id} id={`servicio-${s._id}`}>
+      
+      <Card
+        sx={{
+          height: "100%",
+          borderRadius: "20px",
+          overflow: "hidden",
+          boxShadow: 3,
+          transition: "all 0.3s ease",
+          display: "flex",
+          flexDirection: "column",
+          "&:hover": {
+            transform: "translateY(-8px)",
+            boxShadow: 8
+          }
+        }}
+      >
+
+        {/* IMAGEN */}
+        {s.imagen && (
+          <Box
+            component="img"
+            src={s.imagen}
+            alt={s.nombre}
+            sx={{
+              width: "100%",
+              height: 240,
+              objectFit: "cover"
+            }}
+          />
+        )}
+
+        {/* CONTENIDO */}
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            p: 3
+          }}
+        >
+
+          {/* TITULO */}
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              color: "#04364A",
+              mb: 1
+            }}
+          >
+            {s.nombre}
+          </Typography>
+
+          {/* PRECIO */}
+          <Typography
+            sx={{
+              color: "#1f978d",
+              fontWeight: 700,
+              fontSize: "20px",
+              mb: 2
+            }}
+          >
+            Desde{" "}
+            {new Intl.NumberFormat("es-CO", {
+              style: "currency",
+              currency: "COP",
+              minimumFractionDigits: 0
+            }).format(s.precioReferencial)}
+          </Typography>
+
+          {/* DESCRIPCION */}
+          <Typography
+            sx={{
+              color: "#555",
+              mb: 3,
+              lineHeight: 1.7,
+              flexGrow: 1
+            }}
+          >
+            {s.descripcion}
+          </Typography>
+
+          {/* FOOTER */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: "auto"
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "14px",
+                color: "#888"
+              }}
+            >
+              ⏱ {s.duracion} min
+            </Typography>
+
+            <Button
+              variant="contained"
+              component={Link}
+              to="/reservar"
+              state={{ servicio: s }}
+              sx={{
+                borderRadius: "12px",
+                backgroundColor: "#5ebecb",
+                px: 3,
+                "&:hover": {
+                  backgroundColor: "#1f978d"
+                }
+              }}
+            >
+              Reservar
 </Button>
-  </CardContent>
+</Box>
+</CardContent>
 </Card>
 </Grid>
 ))}
-
 </Grid>
-
-<Box sx={{ textAlign: "center", mt: 5 }}>
-  <Button
-    variant="contained"
-    size="large"
-    component={Link}
-    to="/reservar"
-  >
-    Solicitar Cita
-  </Button>
-</Box>
-
 </Container>
-
-
 );
 }

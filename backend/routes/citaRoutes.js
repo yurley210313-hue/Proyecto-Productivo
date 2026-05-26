@@ -1,7 +1,7 @@
 import express from "express";
 import { verificarToken } from "../middlewares/authMiddleware.js";
 import {   crearCita,   obtenerCitas,   obtenerHorariosDisponibles,   obtenerCalendario,   obtenerCitasPorPaciente,   eliminarCita,
-  actualizarCita, sugerirOdontologo
+  actualizarCita, sugerirOdontologo, buscarCitasPaciente
 } from "../controllers/citaController.js";
 
 const router = express.Router();
@@ -18,5 +18,6 @@ router.get("/sugerir-odontologo", verificarToken, sugerirOdontologo);
 // Ruta pública
 router.get("/disponibilidad", obtenerHorariosDisponibles);
 router.post("/", crearCita); 
+router.get("/buscar", buscarCitasPaciente);
 
 export default router;

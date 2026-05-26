@@ -7,6 +7,7 @@ import { obtenerHorariosBase } from "../utils/horarios.js";
 import { obtenerOdontologosPorServicio } from "../utils/obtenerOdontologos.js";
 
 
+
 // CREAR CITA
 export const crearCita = async (req, res) => {
       
@@ -173,6 +174,7 @@ if (!especialidadesOdontologo.includes(especialidadServicio)) {
     candidatos[randomIndex].odontologo;
 }
 
+
 //  crear paciente 
 let pacienteId;
 
@@ -272,11 +274,54 @@ export const obtenerCitasPorPaciente = async (req, res) => {
   }
 };
 
+// BUSCAR CITAS PUBLICAS
+export const buscarCitasPaciente = async (req, res) => {
+
+  try {
+
+    const { documento, telefono } = req.query;
+
+    if (!documento && !telefono) {
+      return res.status(400).json({
+        mensaje: "Documento o teléfono requerido"
+      });
+    }
+
+    const paciente = await Paciente.findOne({
+      $or: [
+        { documento },
+        { telefono }
+      ]
+    });
+
+    if (!paciente) {
+      return res.status(404).json({
+        mensaje: "Paciente no encontrado"
+      });
+    }
+
+    const citas = await Cita.find({
+      paciente: paciente._id
+    })
+    .populate("servicio", "nombre precio")
+    .populate("odontologo", "nombre");
+
+    res.json(citas);
+
+  } catch (error) {
+
+    res.status(500).json({
+      mensaje: "Error al buscar citas"
+    });
+
+  }
+};
 
 // ACTUALIZAR CITA
 
 export const actualizarCita = async (req, res) => {
   try {
+
     const { fecha, hora, servicio, odontologo } = req.body;
 
     const cita = await Cita.findById(req.params.id).populate("servicio");
@@ -495,6 +540,7 @@ export const obtenerCalendario = async (req, res) => {
     res.status(500).json({
       mensaje: "Error al obtener calendario"
     });
+
   }
 };
 

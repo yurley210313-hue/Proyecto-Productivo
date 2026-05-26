@@ -9,7 +9,7 @@ dotenv.config();
 // Crear app
 const app = express();
 
-// Conectar base de datos
+// Conectar base de datos 
 connectDB();
 
 // Middlewares
