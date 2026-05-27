@@ -1,8 +1,7 @@
 import { Grid, Card, CardContent, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell
+import {  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 
 export default function Dashboard() {

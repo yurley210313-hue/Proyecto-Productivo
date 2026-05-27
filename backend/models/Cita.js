@@ -13,10 +13,15 @@ const CitaSchema = new mongoose.Schema({
   odontologo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Odontologo"
-  },
+     },
+     estado: {
+  type: String,
+  default: "pendiente"
+},
   fecha: Date,
   hora: String,
   mensaje: String,
+  
 });
 
 // 🔒 BLOQUEO DE DUPLICADOS 

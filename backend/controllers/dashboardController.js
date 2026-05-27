@@ -35,9 +35,6 @@ export const obtenerDashboard = async (req, res) => {
       estado: "cancelada"
     });
 
-    const pacientesNuevos = await Paciente.countDocuments({
-      nuevoPaciente: true
-    });
 
     const proximas = await Cita.find()
       .sort({ fecha: 1 })
@@ -47,12 +44,11 @@ export const obtenerDashboard = async (req, res) => {
     // 🔥 RESPUESTA COMPLETA
     res.json({
       totalPacientes,
-           totalCitas,
+      totalCitas,
       totalServicios,
       citasHoy,
       canceladas,
-      pacientesNuevos,
-      proximas
+     proximas
     });
 
   } catch (error) {

@@ -13,7 +13,7 @@ export default function Servicios(){
 
   const [form,setForm] = useState({
     nombre:"",
-    precio:"",
+    precioReferencial:"",
     descripcion:"",
     duracion:"",
     especialidad:"",
@@ -59,7 +59,7 @@ export default function Servicios(){
     setEditando(false);
     setForm({
       nombre:"",
-      precio:"",
+      precioReferencial:"",
       descripcion:"",
       duracion:"",
       especialidad:"",
@@ -75,7 +75,7 @@ export default function Servicios(){
 
     setForm({
       nombre: s.nombre || "",
-      precio: s.precio || "",
+      precioReferencial: s.precioReferencial || "",
       descripcion: s.descripcion || "",
       duracion: s.duracion || "",
      especialidad: s.especialidad?._id || "",
@@ -159,7 +159,7 @@ const cargarEspecialidades = async () => {
         <TableHead>
           <TableRow>
             <TableCell>Nombre</TableCell>
-            <TableCell>Precio</TableCell>
+            <TableCell>Precio-Referencia</TableCell>
             <TableCell>Categoría</TableCell>
             <TableCell>Activo</TableCell>
             <TableCell>Acciones</TableCell>
@@ -222,10 +222,10 @@ const cargarEspecialidades = async () => {
 
           <TextField
             fullWidth
-            label="Precio"
-            name="precio"
+            label="PrecioReferencial"
+            name="precioRefencial"
             type="number"
-            value={form.precio}
+            value={form.precioReferencial}
             onChange={handleChange}
             sx={{mb:2}}
           />

@@ -22,7 +22,7 @@ export const register = async (req, res) => {
       nombre,
       email,
       password: passwordHash,
-      rol: rol || "admin"
+      rol: rol || "paciente"
     });
 
     await nuevoUsuario.save();
