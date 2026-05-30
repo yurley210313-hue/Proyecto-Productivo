@@ -34,12 +34,16 @@ export const obtenerDashboard = async (req, res) => {
     const canceladas = await Cita.countDocuments({
       estado: "cancelada"
     });
-
-
-    const proximas = await Cita.find()
-      .sort({ fecha: 1 })
-      .limit(5)
-      .populate("paciente");
+    
+const proximas = await Cita.find({
+  fecha: {
+    $gte: inicioDia,
+    $lt: finDia
+  },
+  estado: "pendiente"
+})
+.sort({ hora: 1 })
+.populate("paciente");
 
     // 🔥 RESPUESTA COMPLETA
     res.json({

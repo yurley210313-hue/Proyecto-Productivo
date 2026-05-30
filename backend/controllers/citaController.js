@@ -325,6 +325,16 @@ export const actualizarCita = async (req, res) => {
     const { fecha, hora, servicio, odontologo } = req.body;
 
     const cita = await Cita.findById(req.params.id).populate("servicio");
+    
+if (req.body.estado && Object.keys(req.body).length === 1) {
+  cita.estado = req.body.estado;
+  await cita.save();
+  return res.json({
+    mensaje: "Estado actualizado correctamente",
+    cita
+  });
+
+}
 
     if (!cita) {
       return res.status(404).json({
@@ -476,8 +486,11 @@ if (!especialidadesOdontologo.includes(especialidadServicio)) {
     cita.hora = horaFinal;
     cita.servicio = servicio || cita.servicio;
     cita.odontologo = odontologoAsignado._id;
+    if (estado) {
+    cita.estado = estado;
+}
 
-    try {
+try {
       await cita.save();
     } catch (error) {
       if (error.code === 11000) {

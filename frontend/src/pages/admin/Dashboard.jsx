@@ -138,21 +138,6 @@ Servicios
         ))}
       </Grid>
 
-      {/* 🔹 PACIENTES */}
-      <Typography variant="h6" sx={{ mt: 4 }}>
-        Pacientes Recientes
-      </Typography>
-
-      {(data.pacientesRecientes || []).map((p, i) => (
-        <Card key={i} sx={{ mb: 2 }}>
-          <CardContent>
-            <Typography>{p.nombre}</Typography>
-            <Typography color="textSecondary">{p.email}</Typography>
-            <Typography color="textSecondary">{p.telefono}</Typography>
-          </CardContent>
-        </Card>
-      ))}
-
     </div>
   );
 }

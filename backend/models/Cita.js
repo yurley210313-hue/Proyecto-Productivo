@@ -14,8 +14,9 @@ const CitaSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Odontologo"
      },
-     estado: {
+estado: {
   type: String,
+  enum: ["pendiente", "cancelada", "terminada"],
   default: "pendiente"
 },
   fecha: Date,

@@ -7,14 +7,15 @@ import FiltersSidebar from "../../components/calendar/FiltersSidebar";
 import CitasTable from "../../components/calendar/CitasTable";
 import AppointmentDrawer from "../../components/calendar/AppointmentDrawer";
 import "../../components/calendar/calendario.css";
-import { Container,   Box,    Tabs,  Tab, Button
-} from "@mui/material";
+import { Container,   Box,    Tabs,  Tab, Button } from "@mui/material";
 import api from "../../services/api";
+
 export default function Calendario(){
 
 const [servicios, setServicios] = useState([]);
 const [citas, setCitas] = useState([]);
 const [odontologos, setOdontologos] = useState([]);
+
 
 const [form, setForm] = useState({
   paciente: "",
@@ -44,8 +45,8 @@ const [vista, setVista] = useState("calendar");
 const [odontologoFiltro, setOdontologoFiltro] = useState("");
 const [odontologoSugerido, setOdontologoSugerido] = useState(null);
 const [consultorioFiltro, setConsultorioFiltro] = useState("");
+const [filtroEstado, setFiltroEstado] = useState("");
 
- 
 useEffect(() => {
 
   const iniciar = async () => {
@@ -433,62 +434,78 @@ if (fechaCitaString !== fechaFiltro) {
         return false;
   }
 }
-    // tabs
-    if (tabCitas === 0) return true;
+// tabs
 
-    if (tabCitas === 1) {
-      return fechaCita.getTime() === hoy.getTime();
+if (tabCitas === 0) {
+return fechaCita.getTime() === hoy.getTime();
     }
-
-    if (tabCitas === 2) {
-      return fechaCita > hoy;
+if (tabCitas === 1) {
+return fechaCita > hoy;
     }
-
-    if (tabCitas === 3) {
-      return fechaCita < hoy;
+if (tabCitas === 2) {
+return fechaCita < hoy;
     }
-
-    return false;
+if (tabCitas === 3) return true;
+return false;
 })
 
   .sort((a, b) => {
 
-    const fechaHoraA = new Date(a.fecha);
-    const fechaHoraB = new Date(b.fecha);
+const fechaHoraA = new Date(a.fecha);
+const fechaHoraB = new Date(b.fecha);
+const [horaA, minutoA] = a.hora.split(":");
+const [horaB, minutoB] = b.hora.split(":");
 
-    const [horaA, minutoA] = a.hora.split(":");
-    const [horaB, minutoB] = b.hora.split(":");
-
-    fechaHoraA.setHours(horaA, minutoA, 0, 0);
-    fechaHoraB.setHours(horaB, minutoB, 0, 0);
-
-    return fechaHoraA - fechaHoraB;
+fechaHoraA.setHours(horaA, minutoA, 0, 0);
+fechaHoraB.setHours(horaB, minutoB, 0, 0);
+ return fechaHoraA - fechaHoraB;
   });
-  const citasCalendarioFiltradas = citas.filter(c => {
-
-  if (
+const citasCalendarioFiltradas = citas.filter(c => {
+if (
     odontologoFiltro &&
     c.odontologo?._id !== odontologoFiltro
   ) {
     return false;
   }
 
-  if (fechaSeleccionada) {
+if (fechaSeleccionada) {
 
-    const fechaFiltro =
-      fechaSeleccionada.format("YYYY-MM-DD");
+const fechaFiltro =
+fechaSeleccionada.format("YYYY-MM-DD");
+const fechaCita =
+dayjs(c.fecha).format("YYYY-MM-DD");
 
-    const fechaCita =
-      dayjs(c.fecha).format("YYYY-MM-DD");
-
-    if (fechaFiltro !== fechaCita) {
+if (fechaFiltro !== fechaCita) {
       return false;
     }
   }
 
   return true;
 });
- 
+
+const cambiarEstado = async (
+  id,
+  nuevoEstado
+) => {
+
+  try {
+
+    await api.put(`/citas/${id}`, {
+      estado: nuevoEstado
+    });
+
+    await cargarTodo();
+
+    toast.success("Estado actualizado");
+
+  } catch (error) {
+
+    console.error(error);
+
+    toast.error("Error al actualizar estado");
+  }
+};
+
 return (
 
   <Container maxWidth="xl">
@@ -567,8 +584,12 @@ setFechaSeleccionada={setFechaSeleccionada}
             setTabCitas={setTabCitas}
             busquedaCitas={busquedaCitas}
             setBusquedaCitas={setBusquedaCitas}
+            filtroEstado={filtroEstado}
+            setFiltroEstado={setFiltroEstado}
+            cambiarEstado={cambiarEstado}
             editarCita={editarCita}
             eliminarCita={eliminarCita}
+            
           />
         )}
 

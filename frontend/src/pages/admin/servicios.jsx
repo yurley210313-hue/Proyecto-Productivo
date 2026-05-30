@@ -92,10 +92,10 @@ export default function Servicios(){
 
       const data = {
         nombre: form.nombre,
-        precioReferencial: Number(form.precio),
+        precioReferencial: Number(form.precioReferencial),
         descripcion: form.descripcion,
         duracion: form.duracion,
-       especialidad: form.especialidad,
+        especialidad: form.especialidad,
         activo: form.activo,
         imagen: form.imagen
       };
@@ -159,8 +159,8 @@ const cargarEspecialidades = async () => {
         <TableHead>
           <TableRow>
             <TableCell>Nombre</TableCell>
-            <TableCell>Precio-Referencia</TableCell>
-            <TableCell>Categoría</TableCell>
+            <TableCell>Precio Referencial</TableCell>
+            <TableCell>Especialidad</TableCell>
             <TableCell>Activo</TableCell>
             <TableCell>Acciones</TableCell>
           </TableRow>
@@ -222,8 +222,8 @@ const cargarEspecialidades = async () => {
 
           <TextField
             fullWidth
-            label="PrecioReferencial"
-            name="precioRefencial"
+            label="Precio Referencial"
+            name="precioReferencial"
             type="number"
             value={form.precioReferencial}
             onChange={handleChange}
@@ -257,7 +257,7 @@ const cargarEspecialidades = async () => {
   sx={{mb:2}}
 />
 
-         <TextField
+<TextField
   select
   fullWidth
   label="Especialidad"
@@ -278,11 +278,7 @@ const cargarEspecialidades = async () => {
 
   ))}
 
-            <MenuItem value="General">General</MenuItem>
-            <MenuItem value="Ortodoncia">Ortodoncia</MenuItem>
-            <MenuItem value="Estética">Estética</MenuItem>
-            <MenuItem value="Cirugía">Cirugía</MenuItem>
-          </TextField>
+</TextField>
 
           <div style={{marginTop:"10px"}}>
             Activo:

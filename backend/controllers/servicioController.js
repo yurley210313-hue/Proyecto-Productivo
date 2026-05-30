@@ -36,7 +36,7 @@ export const actualizarServicio = async (req, res) => {
         ...req.body,
         precioReferencial: Number(req.body.precioReferencial)
       },
-      { returnDocument: 'after', runValidators: true }
+      {  new: true, runValidators: true }
     );
 
     res.json(actualizado);
