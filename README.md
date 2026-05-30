@@ -121,9 +121,6 @@ Sistema web para la gestión y administración de citas odontológicas, paciente
     ├── package.json
     └── vite.config.js
 
-
-  
-
 # Scripts disponibles
 
 ## Backend
@@ -187,8 +184,6 @@ npm run dev
 ```
 
 ---
-
-
 # Configuración Frontend
 
 ## Entrar a frontend
@@ -223,9 +218,7 @@ npm run dev
 - Disponibilidad de horarios
 - Calendario de citas
 
-
 ---
-
 # Usuarios y roles
 El sistema maneja autenticación mediante JWT y control de acceso por roles.
 
@@ -235,7 +228,6 @@ El sistema maneja autenticación mediante JWT y control de acceso por roles.
 
 - Recepcionista
   - Gestión de citas y pacientes
-
 ---
 
 # Estado del proyecto
