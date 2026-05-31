@@ -256,12 +256,14 @@ if (!formulario.tipo) {
     },
   }}
 >
+  <MenuItem value="">
+    Seleccione
+  </MenuItem>
 
-<option value=""> Seleccione </option>
-<option value="Consulta"> Consulta </option>
-<option value="Sugerencia"> Sugerencia </option>
-<option value="Queja"> Queja </option>
-<option value="Reclamo"> Reclamo </option>
+<MenuItem value="Consulta"> Consulta </MenuItem>
+<MenuItem value="Sugerencia"> Sugerencia </MenuItem>
+<MenuItem value="Queja"> Queja </MenuItem>
+<MenuItem value="Reclamo"> Reclamo </MenuItem>
 </TextField>
   
   </Grid>

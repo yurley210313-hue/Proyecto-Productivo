@@ -111,16 +111,35 @@ await fetch(
       headerName: "Estado",
       width: 160,
 
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={
-            params.value === "Pendiente"
-              ? "warning"
-              : "success"
-          }
-        />
-      ),
+renderCell: (params) => {
+
+  let color = "default";
+
+  switch (params.value) {
+
+    case "Pendiente":
+      color = "warning";
+      break;
+
+    case "Respondido":
+      color = "info";
+      break;
+
+    case "Cerrado":
+      color = "success";
+      break;
+
+    default:
+      color = "default";
+  }
+
+  return (
+    <Chip
+      label={params.value}
+      color={color}
+    />
+  );
+}
     },
 
     {
