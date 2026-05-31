@@ -9,6 +9,7 @@ const [pacientes, setPacientes] = useState([]);
 const [busquedaPacientes, setBusquedaPacientes] = useState("");
 const [page, setPage] = useState(0);
 const [rowsPerPage, setRowsPerPage] = useState(5);
+const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
 const [form, setForm] = useState({
   nombre: "",
@@ -79,8 +80,8 @@ const editarPaciente = (p) => {
       ? new Date(p.fechaNacimiento).toISOString().split("T")[0]
       : ""
   });
-
-  setEditandoPaciente(p._id);
+setEditandoPaciente(p._id);
+setMostrarFormulario(true);
 };
 
 // Guardar paciente
@@ -89,7 +90,6 @@ const guardarPaciente = async (e) => {
   e.preventDefault();
 
   try {
-
     const data = {
       nombre: form.nombre,
       documento: form.documento,
@@ -98,19 +98,30 @@ const guardarPaciente = async (e) => {
       fechaNacimiento: form.fechaNacimiento
     };
 
-    await api.put(`/pacientes/${editandoPaciente}`, data);
+    if (editandoPaciente) {
+      await api.put(
+        `/pacientes/${editandoPaciente}`,
+        data
+      );
 
-    alert("Paciente actualizado");
+      alert("Paciente actualizado");
+    } else {
+      await api.post(
+        "/pacientes",
+        data
+      );
+
+      alert("Paciente creado");
+    }
 
     limpiarFormulario();
-
     setEditandoPaciente(null);
-
+    setMostrarFormulario(false);
     cargarPacientes();
-
+    
   } catch (error) {
     console.error(error);
-    alert("Error al actualizar paciente");
+    alert("Error al guardar paciente");
   }
 };
 
@@ -140,19 +151,31 @@ const formatearFecha = (fecha) => {
 };
 
  return (
+
   <Container maxWidth="lg">
+<Button
+  variant="contained"
+  sx={{ mb: 3 }}
+  onClick={() => {
+    limpiarFormulario();
+    setEditandoPaciente(null);
+    setMostrarFormulario(true);
+  }}
+>
+  Crear paciente
+</Button>
 
-    {editandoPaciente && (
+{mostrarFormulario && (
 
-      <Box
-        component="form"
-        onSubmit={guardarPaciente}
-        sx={{
-          display: "grid",
-          gap: 2,
-          mb: 4
-        }}
-      >
+<Box
+  component="form"
+  onSubmit={guardarPaciente}
+  sx={{
+    display: "grid",
+    gap: 2,
+    mb: 4
+  }}
+>
 
         <TextField
           label="Nombre"
@@ -190,17 +213,29 @@ const formatearFecha = (fecha) => {
           value={form.email}
           onChange={handleChange}
         />
-
-        <Button
-          type="submit"
-          variant="contained"
-        >
-          Actualizar paciente
-        </Button>
-
+<Button
+  type="submit"
+  variant="contained"
+>
+  {editandoPaciente
+    ? "Actualizar paciente"
+    : "Crear paciente"}
+</Button>
+{editandoPaciente && (
+<Button
+  color="secondary"
+  onClick={() => {
+    limpiarFormulario();
+    setEditandoPaciente(null);
+    setMostrarFormulario(false);
+  }}
+>
+  Cancelar
+</Button>
+)}
       </Box>
-
-    )}
+)}
+    
 {/* TABLA PACIENTES */}
 <Typography variant="h4" gutterBottom>
     Pacientes

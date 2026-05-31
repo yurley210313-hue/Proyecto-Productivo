@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 const odontologoSchema = new mongoose.Schema({
   nombre: String,
 
+  documento: String,
+
   especialidades: [
     {
       type: mongoose.Schema.Types.ObjectId,

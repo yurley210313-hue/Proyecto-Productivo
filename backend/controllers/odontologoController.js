@@ -15,7 +15,8 @@ export const crearOdontologo = async (req, res) => {
 
 export const obtenerOdontologos = async (req, res) => {
   try {
-    const odontologos = await Odontologo.find();
+  const odontologos = await Odontologo.find()
+  .populate("especialidades");
     res.json(odontologos);
   } catch (error) {
     res.status(500).json({ mensaje: "Error al obtener odontólogos" });
