@@ -246,7 +246,7 @@ export const obtenerCitas = async (req, res) => {
   try {
     const citas = await Cita.find()
       .populate("paciente", "nombre documento telefono email")
-      .populate("servicio", "nombre duracion precio")
+      .populate("servicio", "nombre duracion precioReferencial")
       .populate("odontologo", "nombre");
 
     res.json(citas);
@@ -262,7 +262,7 @@ export const obtenerCitasPorPaciente = async (req, res) => {
 
     const citas = await Cita.find({ paciente: id })
       .populate("paciente", "nombre documento telefono email")
-      .populate("servicio", "nombre duracion precio")
+      .populate("servicio", "nombre duracion precioReferencial")
       .populate("odontologo", "nombre");
 
     res.json(citas);
@@ -303,7 +303,7 @@ export const buscarCitasPaciente = async (req, res) => {
     const citas = await Cita.find({
       paciente: paciente._id
     })
-    .populate("servicio", "nombre precio")
+    .populate("servicio", "nombre precioReferencial")
     .populate("odontologo", "nombre");
 
     res.json(citas);
@@ -482,12 +482,14 @@ if (!especialidadesOdontologo.includes(especialidadServicio)) {
     }
 
     // 💾 actualizar cita
-    cita.fecha = fechaFinal;
-    cita.hora = horaFinal;
-    cita.servicio = servicio || cita.servicio;
-    cita.odontologo = odontologoAsignado._id;
-    if (estado) {
-    cita.estado = estado;
+cita.fecha = fechaFinal;
+cita.hora = horaFinal;
+cita.servicio = servicio || cita.servicio;
+cita.odontologo = odontologoAsignado._id;
+cita.estado = estado;
+
+if (req.body.estado) {
+cita.estado = req.body.estado;
 }
 
 try {

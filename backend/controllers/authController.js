@@ -2,35 +2,38 @@ import Usuario from "../models/Usuario.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// 🔐 REGISTRO DE USUARIO
-export const register = async (req, res) => {
-  try {
-    const { nombre, email, password, rol } = req.body;
 
-    // Verificar si ya existe el usuario
+export const crearAdmin = async (req, res) => {
+  try {
+    const { nombre, email, password } = req.body;
+
     const existe = await Usuario.findOne({ email });
+
     if (existe) {
-      return res.status(400).json({ mensaje: "El usuario ya existe" });
+      return res.status(400).json({
+        mensaje: "El usuario ya existe"
+      });
     }
 
-    // Encriptar contraseña
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+    const passwordHash = await bcrypt.hash(password, 10);
 
-    // Crear usuario
-    const nuevoUsuario = new Usuario({
+    const admin = new Usuario({
       nombre,
       email,
       password: passwordHash,
-      rol: rol || "paciente"
+      rol: "admin"
     });
 
-    await nuevoUsuario.save();
+    await admin.save();
 
-    res.json({ mensaje: "Usuario creado correctamente" });
+    res.status(201).json({
+      mensaje: "Administrador creado correctamente"
+    });
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      error: error.message
+    });
   }
 };
 

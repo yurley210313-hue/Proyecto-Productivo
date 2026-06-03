@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import { useLocation } from "react-router-dom";
-import {   Container,   Grid,   TextField,   Button,   Typography,   Card,   CardContent,   MenuItem,   Box,   CircularProgress
-} from "@mui/material";
+import { Container, Grid, TextField, Button, Typography, Card, CardContent, MenuItem, Box, CircularProgress } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ScheduleIcon from "@mui/icons-material/Schedule";
@@ -56,8 +55,7 @@ useEffect(() => {
     if (!form.fecha || !form.servicio) return;
 
     try {
-     const res = await api.get(
-  `/citas/disponibilidad?fecha=${form.fecha}&servicio=${form.servicio}`
+     const res = await api.get( `/citas/disponibilidad?fecha=${form.fecha}&servicio=${form.servicio}`
 );
 setHorariosDisponibles(res.data.disponibles || []);
 setTodosHorarios(res.data.todos || []);
@@ -71,7 +69,7 @@ setTodosHorarios(res.data.todos || []);
 }, [form.fecha, form.servicio]);
 
 const handleChange = (e) => {
-  const { name, value } = e.target;
+const { name, value } = e.target;
 
   setForm((prev) => ({
     ...prev,
@@ -500,15 +498,12 @@ sx={{
     )}
   </Button>
 </Box>
-
 </Grid>
-
 </Grid>
 </form>
 </CardContent>
 </Card>
 </Box>
-
 </Box>
 </Container>
   );
