@@ -469,6 +469,122 @@ Versión actual: 1.0.0
 
 Última actualización: Junio 2026
 
+# Observaciones y ajustes realizados
+
+Durante el proceso de revisión y retroalimentación del proyecto se identificaron varios aspectos técnicos y funcionales que fueron corregidos con el fin de mejorar la estabilidad, seguridad y mantenibilidad de la aplicación.
+
+## 1. Organización y estructura del proyecto
+
+Se verificó la correcta separación entre frontend y backend, manteniendo una arquitectura organizada basada en componentes, controladores, modelos, rutas y servicios.
+
+Además:
+
+- Se eliminaron archivos sensibles del repositorio.
+- Se verificó que la carpeta `node_modules` no se encuentre versionada.
+- Se revisaron las dependencias del proyecto.
+- Se actualizaron los archivos de configuración necesarios para la ejecución del sistema.
+
+---
+
+## 2. Instalación y ejecución
+
+Se realizaron pruebas de instalación en un entorno limpio para verificar:
+
+- Instalación correcta de dependencias del backend.
+- Instalación correcta de dependencias del frontend.
+- Ejecución del servidor Express.
+- Compilación y ejecución de la aplicación React mediante Vite.
+
+También se actualizaron las instrucciones de instalación y configuración dentro del archivo README.
+
+---
+
+## 3. Corrección de la gestión de citas
+
+Se revisó el módulo de citas, realizando pruebas sobre las operaciones principales:
+
+- Crear cita.
+- Consultar cita.
+- Actualizar cita.
+- Reprogramar cita.
+- Gestionar estados de cita.
+
+Se corrigieron inconsistencias detectadas durante las pruebas de funcionamiento para garantizar la correcta administración de las citas odontológicas.
+
+---
+
+## 4. Seguridad y control de acceso
+
+Se fortaleció el sistema de autenticación y autorización mediante JWT.
+
+Cambios realizados:
+
+- Se restringió la creación de usuarios administradores.
+- Se implementó una ruta protegida para el registro de administradores.
+- Se aplicó control de acceso basado en roles.
+- Se verificó la protección de rutas administrativas mediante middleware de autenticación.
+
+Esto evita que usuarios no autorizados puedan asignarse privilegios administrativos.
+
+---
+
+## 5. Unificación de nombres de campos
+
+Se revisó la consistencia entre frontend y backend para garantizar que los modelos, controladores y vistas utilicen los mismos nombres de propiedades.
+
+Especialmente se verificaron campos relacionados con:
+
+- Servicios.
+- Citas.
+- Pacientes.
+- Odontólogos.
+
+Con ello se evita la pérdida de información o errores de visualización.
+
+---
+
+## 6. Gestión de disponibilidad
+
+Durante el desarrollo inicial existía un componente denominado `Disponibilidad.jsx`.
+
+Tras la revisión funcional del sistema se determinó que la gestión de disponibilidad ya se encontraba integrada dentro de los módulos de:
+
+- Calendario.
+- Gestión de citas.
+- Asignación de horarios.
+
+Por esta razón el archivo `Disponibilidad.jsx` fue eliminado para evitar duplicidad de funcionalidades y simplificar la arquitectura del frontend.
+
+La disponibilidad de horarios continúa funcionando como parte del flujo de gestión de citas y calendario administrativo.
+
+---
+
+## 7. Documentación del proyecto
+
+Se amplió la documentación técnica mediante:
+
+- Instrucciones de instalación.
+- Configuración de variables de entorno.
+- Descripción de funcionalidades.
+- Casos de prueba realizados.
+- Evidencias de funcionamiento de la API.
+
+Esto permite que cualquier usuario pueda instalar y ejecutar el proyecto siguiendo las instrucciones proporcionadas.
+
+---
+
+## 8. Pruebas realizadas
+
+Se realizaron pruebas funcionales mediante Postman sobre los principales módulos del sistema:
+
+- Autenticación.
+- Gestión de pacientes.
+- Gestión de servicios.
+- Gestión de citas.
+- Gestión de usuarios administradores.
+
+Las evidencias de dichas pruebas junto con las capturas de pantalla del sistema, se encuentran documentadas en este repositorio.
+
 # Estado del proyecto
 
 Versión académica funcional.
@@ -487,6 +603,11 @@ Pendientes:
 - Mejoras visuales.
 - Optimización de rendimiento.
 - Nuevas funcionalidades futuras.
+
+## Nota sobre la evolución del proyecto
+
+El proyecto fue desarrollado de forma incremental, incorporando mejoras y correcciones a partir de las observaciones recibidas durante el proceso de seguimiento y evaluación. Las modificaciones realizadas permitieron fortalecer la seguridad, mejorar la organización del código y optimizar la experiencia de uso del sistema.
+
 
 # Autor
 
