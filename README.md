@@ -571,6 +571,62 @@ Se amplió la documentación técnica mediante:
 
 Esto permite que cualquier usuario pueda instalar y ejecutar el proyecto siguiendo las instrucciones proporcionadas.
 
+# Nuevas modificaciones/ 05 Junio 2026
+
+## Correcciones realizadas tras retroalimentación
+
+- Corrección de la entrada principal de Vite mediante el archivo `main.jsx`.
+- Corrección del controlador de actualización de citas eliminando referencias a variables no definidas.
+- Verificación de compilación mediante `npm run build`: 
+  - Realicé nuevamente la validación del frontend ejecutando: npm run build
+  - Obteniendo una compilación exitosa mediante Vite: ✓ built in 4.23s
+  - Por lo anterior, el frontend compila correctamente en la versión actual del repositorio.
+    ![build](screenshots\Build.png)
+
+
+    ### Observaciones
+El controlador crearCita() tiene dos modos de funcionamiento:
+
+Opción 1: Paciente existente
+{
+  "fecha": "2026-07-15",
+  "hora": "10:00",
+  "servicio": "ID_SERVICIO",
+  "paciente": "ID_PACIENTE"
+}
+El sistema utiliza un paciente ya registrado.
+
+Opción 2: Paciente nuevo
+{
+  "fecha": "2026-07-15",
+  "hora": "10:00",
+  "servicio": "ID_SERVICIO",
+  "nombre": "Gerardo Amaya",
+  "documento": "1101755869",
+  "telefono": "3184545986",
+  "email": "gerardoamaya.a@gmail.com",
+  "fechaNacimiento": "1982-10-21"
+}
+El sistema crea automáticamente el paciente y luego registra la cita.
+
+   ### Validación del módulo de citas
+
+Se verificó el correcto funcionamiento de las operaciones principales del sistema de citas:
+
+- Creación de citas.
+![Crear cita](screenshots\Crear-cita.png)
+
+- Consulta de citas registradas.
+![Consultar cita](screenshots\Consultar-citas.png)
+
+- Reprogramación de fecha y hora.
+![Reprogramar cita](screenshots\Reprogramar-cita.png)
+
+- Cambio de estado de la cita.
+![Estados de citas](screenshots\Cambio-estado.png)
+
+Durante las pruebas se validó tanto la asignación automática de pacientes nuevos como el uso de pacientes previamente registrados.
+
 ---
 
 ## 8. Pruebas realizadas

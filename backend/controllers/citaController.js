@@ -232,9 +232,13 @@ mensaje:
       odontologo: odontologoAsignado.nombre
     });
 
-  } catch (error) {
-    res.status(500).json({
-      mensaje: "Error al crear cita"
+  } 
+  catch (error) {
+  console.error(error);
+
+  res.status(500).json({
+    mensaje: "Error al crear cita",
+    error: error.message
     });
   }
 };
@@ -486,7 +490,6 @@ cita.fecha = fechaFinal;
 cita.hora = horaFinal;
 cita.servicio = servicio || cita.servicio;
 cita.odontologo = odontologoAsignado._id;
-cita.estado = estado;
 
 if (req.body.estado) {
 cita.estado = req.body.estado;
@@ -508,10 +511,13 @@ try {
       odontologo: odontologoAsignado.nombre,
       cita
     });
+  } 
+  catch (error) {
+ console.error(error);
 
-  } catch (error) {
-    res.status(500).json({
-      mensaje: "Error al actualizar cita"
+  res.status(500).json({
+    mensaje: "Error al actualizar cita",
+    error: error.message
     });
   }
 };
